@@ -3,284 +3,394 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LostIT | Publicaciones</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 
-<!-- NAVEGACIÓN -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#inicio">LostIT</a>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="publicaciones.html">LostIT</a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar" aria-controls="mainNavbar"
+                    aria-expanded="false" aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="menu">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="#publicar">Publicar objeto</a></li>
-                <li class="nav-item"><a class="nav-link" href="#misPublicaciones">Mis publicaciones</a></li>
-                <li class="nav-item"><a class="nav-link" href="solicitudes.html">Solicitudes</a></li>
-                <li class="nav-item"><a class="nav-link" href="perfil.html">Mi perfil</a></li>
-            </ul>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#inicio" data-view="inicio">
+                            Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#publicar" data-view="publicar">
+                            Publicar objeto
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#misPublicaciones" data-view="misPublicaciones">
+                            Mis publicaciones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="solicitudes.html">
+                            Solicitudes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="perfil.html">
+                            Mi perfil
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-outline-light btn-sm" href="auth.html" id="logoutButton">
+                            Cerrar sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<main class="container py-4">
+    <main class="container py-4">
 
-    <!-- INICIO -->
-    <section id="inicioSection">
-        <div class="mb-4">
-            <h1 class="h2">Encuentra lo que buscas</h1>
-            <p class="text-muted">Consulta objetos perdidos y encontrados dentro de la comunidad universitaria.</p>
-        </div>
+        <!-- VISTA: INICIO -->
+        <section id="inicioSection" data-section="inicio">
+            <div class="mb-4">
+                <h1 class="h2 fw-bold">Encuentra lo que buscas</h1>
+                <p class="text-muted">Consulta los objetos perdidos y encontrados en ITESO.</p>
+            </div>
 
-        <form id="searchForm" class="card border-0 shadow-sm p-3 mb-4">
-            <div class="row g-3">
-                <div class="col-md-5">
-                    <label for="searchText" class="form-label">Buscar objeto</label>
-                    <input type="search" id="searchText" class="form-control" placeholder="Ej. Mochila, celular...">
-                </div>
+            <!-- BUSCADOR Y FILTROS -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <form id="searchForm">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="searchText" class="form-label">Buscar</label>
+                                <input type="search" class="form-control" id="searchText"
+                                       placeholder="Nombre o descripción">
+                            </div>
 
-                <div class="col-md-2">
-                    <label for="filterType" class="form-label">Tipo</label>
-                    <select id="filterType" class="form-select">
-                        <option value="">Todos</option>
-                        <option value="perdido">Perdido</option>
-                        <option value="encontrado">Encontrado</option>
-                    </select>
-                </div>
+                            <div class="col-md-2">
+                                <label for="filterType" class="form-label">Tipo</label>
+                                <select class="form-select" id="filterType">
+                                    <option value="">Todos</option>
+                                    <option value="perdido">Perdido</option>
+                                    <option value="encontrado">Encontrado</option>
+                                </select>
+                            </div>
 
-                <div class="col-md-2">
-                    <label for="filterCategory" class="form-label">Categoría</label>
-                    <select id="filterCategory" class="form-select">
-                        <option value="">Todas</option>
-                        <option>Electrónica</option>
-                        <option>Accesorios</option>
-                        <option>Documentos</option>
-                        <option>Ropa</option>
-                        <option>Otros</option>
-                    </select>
-                </div>
+                            <div class="col-md-2">
+                                <label for="filterCategory" class="form-label">Categoría</label>
+                                <select class="form-select" id="filterCategory">
+                                    <option value="">Todas</option>
+                                </select>
+                            </div>
 
-                <div class="col-md-3">
-                    <label for="filterLocation" class="form-label">Ubicación</label>
-                    <input type="text" id="filterLocation" class="form-control" placeholder="Ej. Biblioteca">
-                </div>
+                            <div class="col-md-2">
+                                <label for="filterLocation" class="form-label">Ubicación</label>
+                                <input type="text" class="form-control" id="filterLocation"
+                                       placeholder="Ej. Biblioteca">
+                            </div>
 
-                <div class="col-md-3">
-                    <label for="sortDate" class="form-label">Ordenar por</label>
-                    <select id="sortDate" class="form-select">
-                        <option value="recent">Más recientes</option>
-                        <option value="oldest">Más antiguos</option>
-                    </select>
-                </div>
+                            <div class="col-md-2">
+                                <label for="sortDate" class="form-label">Ordenar</label>
+                                <select class="form-select" id="sortDate">
+                                    <option value="newest">Más recientes</option>
+                                    <option value="oldest">Más antiguos</option>
+                                </select>
+                            </div>
 
-                <div class="col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary w-100">Buscar</button>
+                            <div class="col-12 d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+                                <button type="reset" class="btn btn-outline-secondary" id="clearFilters">
+                                    Limpiar filtros
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="h4">Publicaciones recientes</h2>
-            <a href="#publicar" class="btn btn-primary">+ Publicar objeto</a>
-        </div>
+            <!-- RESULTADOS -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h4 mb-0">Publicaciones recientes</h2>
+                <button type="button" class="btn btn-primary"
+                        data-view="publicar">+ Publicar objeto</button>
+            </div>
 
-        <div id="publicationsContainer" class="row g-4">
+            <div id="publicationsContainer" class="row g-4">
 
-            <!-- EJEMPLO DE PUBLICACIÓN -->
-            <div class="col-md-6 col-lg-4">
-                <article class="card h-100 shadow-sm">
-                    <img src="assets/img/ejemplo-mochila.jpg" class="card-img-top" alt="Mochila encontrada">
-                    <div class="card-body">
-                        <span class="badge bg-success">Encontrado</span>
-                        <h3 class="h5 mt-2">Mochila negra</h3>
-                        <p class="text-muted">Mochila negra encontrada cerca de la biblioteca.</p>
-                        <p class="small mb-1">Ubicación: Biblioteca</p>
-                        <p class="small text-muted">Fecha: 10/11/2026</p>
-                        <button class="btn btn-outline-primary w-100" type="button">Ver detalles</button>
+                <!-- EJEMPLO DE PUBLICACIÓN -->
+                <div class="col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm border-0">
+                        <img src="assets/img/ejemplo-mochila.jpg"
+                             class="card-img-top" alt="Mochila negra"
+                             style="height: 200px; object-fit: cover;">
+
+                        <div class="card-body">
+                            <span class="badge bg-danger mb-2">Perdido</span>
+                            <h3 class="h5 card-title">Mochila negra</h3>
+                            <p class="card-text text-muted">
+                                Mochila negra con varios compartimentos.
+                            </p>
+                            <p class="small mb-1">Ubicación: Biblioteca</p>
+                            <p class="small text-muted">Categoría: Accesorios</p>
+
+                            <button type="button" class="btn btn-outline-primary w-100"
+                                    data-action="view-publication"
+                                    data-publication-id="ejemplo-mochila">
+                                Ver detalles
+                            </button>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm border-0">
+                        <img src="assets/img/ejemplo-audifonos.jpg"
+                             class="card-img-top" alt="Audífonos"
+                             style="height: 200px; object-fit: cover;">
+
+                        <div class="card-body">
+                            <span class="badge bg-success mb-2">Encontrado</span>
+                            <h3 class="h5 card-title">Audífonos inalámbricos</h3>
+                            <p class="card-text text-muted">
+                                Audífonos encontrados cerca de la cafetería.
+                            </p>
+                            <p class="small mb-1">Ubicación: Cafetería</p>
+                            <p class="small text-muted">Categoría: Electrónica</p>
+
+                            <button type="button" class="btn btn-outline-primary w-100"
+                                    data-action="view-publication"
+                                    data-publication-id="ejemplo-audifonos">
+                                Ver detalles
+                            </button>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+
+            <div id="publicationsLoading" class="text-center py-4 d-none">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="text-muted mt-2">Cargando publicaciones...</p>
+            </div>
+
+            <div id="publicationsEmpty" class="alert alert-info d-none">
+                No se encontraron publicaciones.
+            </div>
+
+            <!-- PAGINACIÓN -->
+            <nav class="mt-4" aria-label="Paginación de publicaciones">
+                <ul class="pagination justify-content-center" id="publicationsPagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" data-page="previous">Anterior</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#" data-page="1">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" data-page="next">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+
+        <!-- VISTA: PUBLICAR OBJETO -->
+        <section id="publicarSection" data-section="publicar" hidden>
+            <div class="mb-4">
+                <h1 class="h2 fw-bold">Publicar un objeto</h1>
+                <p class="text-muted">Comparte información del objeto perdido o encontrado.</p>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form id="publicationForm">
+
+                        <div class="mb-3">
+                            <label for="publicationType" class="form-label">Tipo de publicación</label>
+                            <select class="form-select" id="publicationType" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="perdido">Perdí un objeto</option>
+                                <option value="encontrado">Encontré un objeto</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="publicationTitle" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="publicationTitle"
+                                   maxlength="100" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="publicationDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="publicationDescription"
+                                      rows="4" maxlength="1000" required></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="publicationCategory" class="form-label">Categoría</label>
+                                <select class="form-select" id="publicationCategory" required>
+                                    <option value="">Selecciona una categoría</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="publicationLocation" class="form-label">Ubicación</label>
+                                <input type="text" class="form-control" id="publicationLocation"
+                                       maxlength="150" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="publicationDate" class="form-label">
+                                Fecha en que se perdió o encontró
+                            </label>
+                            <input type="date" class="form-control" id="publicationDate" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="publicationImage" class="form-label">
+                                Fotografía (opcional)
+                            </label>
+                            <input type="file" class="form-control" id="publicationImage"
+                                   accept="image/*">
+                            <div class="mt-3">
+                                <img id="imagePreview" src="" alt="Vista previa de la imagen"
+                                     class="img-fluid rounded d-none" style="max-height: 200px;">
+                            </div>
+                        </div>
+
+                        <div id="publicationError" class="alert alert-danger d-none"></div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary" id="publishButton">
+                                Publicar
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary"
+                                    data-view="inicio">
+                                Cancelar
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISTA: DETALLE DE PUBLICACIÓN -->
+        <section id="detalleSection" data-section="detalle" hidden>
+            <button type="button" class="btn btn-outline-secondary mb-3"
+                    data-view="inicio">
+                ← Volver a publicaciones
+            </button>
+
+            <div class="card border-0 shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <img id="detailImage" src="" alt="Fotografía del objeto"
+                             class="img-fluid rounded-start w-100"
+                             style="height: 100%; min-height: 300px; object-fit: cover;">
                     </div>
-                </article>
-            </div>
 
-            <div class="col-md-6 col-lg-4">
-                <article class="card h-100 shadow-sm">
-                    <img src="assets/img/ejemplo-audifonos.jpg" class="card-img-top" alt="Audífonos perdidos">
-                    <div class="card-body">
-                        <span class="badge bg-danger">Perdido</span>
-                        <h3 class="h5 mt-2">Audífonos inalámbricos</h3>
-                        <p class="text-muted">Audífonos negros extraviados después de clases.</p>
-                        <p class="small mb-1">Ubicación: Cafetería</p>
-                        <p class="small text-muted">Fecha: 09/11/2026</p>
-                        <button class="btn btn-outline-primary w-100" type="button">Ver detalles</button>
+                    <div class="col-md-7">
+                        <div class="card-body p-4">
+                            <span id="detailStatus" class="badge bg-success mb-2">Encontrado</span>
+                            <h1 class="h3" id="detailTitle">Título del objeto</h1>
+                            <p class="text-muted" id="detailDescription">Descripción del objeto.</p>
+
+                            <hr>
+
+                            <p><strong>Categoría:</strong> <span id="detailCategory"></span></p>
+                            <p><strong>Ubicación:</strong> <span id="detailLocation"></span></p>
+                            <p><strong>Fecha:</strong> <span id="detailDate"></span></p>
+                            <p><strong>Publicado por:</strong> <span id="detailAuthor"></span></p>
+
+                            <button type="button" class="btn btn-primary"
+                                    id="openRequestModal" data-bs-toggle="modal"
+                                    data-bs-target="#requestModal">
+                                Solicitar recuperación
+                            </button>
+                        </div>
                     </div>
-                </article>
+                </div>
             </div>
+        </section>
 
-        </div>
-
-        <!-- PAGINACIÓN -->
-        <nav class="mt-4" aria-label="Paginación">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-            </ul>
-        </nav>
-    </section>
-
-
-    <!-- PUBLICAR OBJETO -->
-    <section id="publicarSection" hidden>
-        <h1 class="h2 mb-2">Publicar un objeto</h1>
-        <p class="text-muted mb-4">Comparte información sobre un objeto perdido o encontrado.</p>
-
-        <div class="card border-0 shadow-sm p-4">
-            <form id="publicationForm">
-
-                <div class="mb-3">
-                    <label for="publicationType" class="form-label">Tipo de publicación</label>
-                    <select id="publicationType" class="form-select" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="perdido">Objeto perdido</option>
-                        <option value="encontrado">Objeto encontrado</option>
-                    </select>
+        <!-- VISTA: MIS PUBLICACIONES -->
+        <section id="misPublicacionesSection" data-section="misPublicaciones" hidden>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h2 fw-bold">Mis publicaciones</h1>
+                    <p class="text-muted mb-0">Administra los objetos que has publicado.</p>
                 </div>
-
-                <div class="mb-3">
-                    <label for="publicationTitle" class="form-label">Nombre del objeto</label>
-                    <input type="text" id="publicationTitle" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="publicationDescription" class="form-label">Descripción</label>
-                    <textarea id="publicationDescription" class="form-control" rows="4" required></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="publicationCategory" class="form-label">Categoría</label>
-                    <select id="publicationCategory" class="form-select" required>
-                        <option value="">Selecciona una categoría</option>
-                        <option>Electrónica</option>
-                        <option>Accesorios</option>
-                        <option>Documentos</option>
-                        <option>Ropa</option>
-                        <option>Otros</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="publicationLocation" class="form-label">Ubicación</label>
-                    <input type="text" id="publicationLocation" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="publicationDate" class="form-label">Fecha del incidente</label>
-                    <input type="date" id="publicationDate" class="form-control" required>
-                </div>
-
-                <div class="mb-4">
-                    <label for="publicationImage" class="form-label">Fotografía del objeto</label>
-                    <input type="file" id="publicationImage" class="form-control" accept="image/*">
-                    <div id="imagePreview" class="mt-3"></div>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Publicar objeto</button>
-                <button type="button" class="btn btn-outline-secondary" id="cancelPublication">Cancelar</button>
-            </form>
-        </div>
-    </section>
-
-
-    <!-- DETALLE DEL OBJETO -->
-    <section id="detalleSection" hidden>
-        <button type="button" class="btn btn-outline-secondary mb-3" id="backToHome">
-            ← Volver a publicaciones
-        </button>
-
-        <div class="row g-4">
-            <div class="col-md-6">
-                <img id="detailImage" src="assets/img/ejemplo-mochila.jpg"
-                     class="img-fluid rounded shadow-sm" alt="Fotografía del objeto">
-            </div>
-
-            <div class="col-md-6">
-                <span id="detailStatus" class="badge bg-success">Encontrado</span>
-                <h1 id="detailTitle" class="h2 mt-2">Mochila negra</h1>
-
-                <p id="detailDescription" class="text-muted">
-                    Descripción del objeto publicado.
-                </p>
-
-                <hr>
-
-                <p><strong>Categoría:</strong> <span id="detailCategory">Accesorios</span></p>
-                <p><strong>Ubicación:</strong> <span id="detailLocation">Biblioteca</span></p>
-                <p><strong>Fecha:</strong> <span id="detailDate">10/11/2026</span></p>
-                <p><strong>Publicado por:</strong> <span id="detailAuthor">Usuario</span></p>
-
-                <button class="btn btn-primary mt-3" data-bs-toggle="modal"
-                        data-bs-target="#requestModal" id="requestButton">
-                    Solicitar recuperación
+                <button type="button" class="btn btn-primary" data-view="publicar">
+                    + Nueva publicación
                 </button>
             </div>
-        </div>
-    </section>
 
+            <div id="myPublicationsContainer" class="row g-4">
+                <!-- El controlador cargará aquí las publicaciones del usuario -->
+            </div>
 
-    <!-- MIS PUBLICACIONES -->
-    <section id="misPublicacionesSection" hidden>
-        <h1 class="h2">Mis publicaciones</h1>
-        <p class="text-muted">Administra los objetos que has publicado.</p>
+            <div id="myPublicationsEmpty" class="alert alert-info">
+                Todavía no tienes publicaciones.
+            </div>
+        </section>
 
-        <div class="d-flex justify-content-between align-items-center my-4">
-            <h2 class="h5">Mis objetos publicados</h2>
-            <button type="button" class="btn btn-primary" id="newPublicationButton">
-                + Nueva publicación
-            </button>
-        </div>
+    </main>
 
-        <div id="myPublicationsContainer" class="row g-3">
-            <!-- Aquí se cargarán las publicaciones del usuario -->
-        </div>
-    </section>
+    <!-- MODAL: SOLICITAR RECUPERACIÓN -->
+    <div class="modal fade" id="requestModal" tabindex="-1"
+         aria-labelledby="requestModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="requestForm">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="requestModalLabel">
+                            Solicitar recuperación
+                        </h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                    </div>
 
-</main>
+                    <div class="modal-body">
+                        <p>Explica por qué consideras que este objeto te pertenece.</p>
 
+                        <div class="mb-3">
+                            <label for="requestMessage" class="form-label">
+                                Mensaje para el propietario
+                            </label>
+                            <textarea class="form-control" id="requestMessage"
+                                      rows="4" maxlength="1000" required></textarea>
+                        </div>
 
-<!-- MODAL PARA SOLICITAR RECUPERACIÓN -->
-<div class="modal fade" id="requestModal" tabindex="-1" aria-labelledby="requestModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="requestForm">
-                <div class="modal-header">
-                    <h2 class="modal-title fs-5" id="requestModalLabel">Solicitar recuperación</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
+                        <div id="requestError" class="alert alert-danger d-none"></div>
+                    </div>
 
-                <div class="modal-body">
-                    <p>Explica por qué consideras que este objeto te pertenece.</p>
-                    <label for="requestMessage" class="form-label">Mensaje</label>
-                    <textarea id="requestMessage" class="form-control" rows="4" required></textarea>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Enviar solicitud</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            Enviar solicitud
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/publicaciones.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Controllers/publicaciones.js"></script>
 </body>
 </html>
