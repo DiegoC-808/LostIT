@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const requestController = require('./api_request');
+const requestController = require('../controllers/request_api_controller');
 
 // Request routes
 router.get('/requests', requestController.getRequests);

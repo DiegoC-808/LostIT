@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const adminController = require('./api_admin');
+const adminController = require('../controllers/admin_api_controller');
 
 // Admin routes
 router.get('/dashboard', adminController.getDashboard);
