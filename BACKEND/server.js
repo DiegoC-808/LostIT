@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const chalk = require('chalk');
 const config = require('./config.js');
 const router = require('./routes/api.js');
+const createInitialData = require('./utils/initial_data.js');
 
 const app = express();
 const port = 3000;
@@ -22,6 +23,7 @@ db.on('connecting', () => {
 });
 db.on('connected', () => {
     console.log(chalk.green('¡Conectado a MongoDB Atlas!'));
+    createInitialData();
 });
 db.on('error', (err) => {
     console.log(chalk.red('No se pudo conectar a la base de datos: ' + err.message));
