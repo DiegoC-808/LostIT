@@ -1,9 +1,15 @@
 const express = require('express');
-const chalk = require('chalk');
-const mongoose = require('mongoose');
-const router = express.Router();
+const usersRoutes = require('./users');
+const publicacionesRoutes = require('./publicaciones');
+const usersController = require('../controllers/users_api_controller');
 
-const port = 3000;
+const routerApi = express.Router();
 
+// LOGIN Y REGISTRO
+routerApi.post('/api/login', usersController.login);
+routerApi.post('/api/register', usersController.createUser);
 
-module.exports = router;
+routerApi.use('/api', usersRoutes);
+routerApi.use('/api', publicacionesRoutes);
+
+module.exports = routerApi;
