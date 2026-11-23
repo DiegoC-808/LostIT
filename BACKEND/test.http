@@ -1,0 +1,140 @@
+@url = http://localhost:3000/api
+@token = pega-aqui-el-token-del-login
+@admin = pega-aqui-el-token-del-admin
+@publicacion = pega-aqui-un-id-de-publicacion
+@categoria = pega-aqui-un-id-de-categoria
+
+### Registro
+POST {{url}}/register
+Content-Type: application/json
+
+{
+    "name": "Ana Prueba",
+    "email": "ana@prueba.mx",
+    "password": "12345678",
+    "confirm_password": "12345678"
+}
+
+### Login
+POST {{url}}/login
+Content-Type: application/json
+
+{
+    "email": "ana@prueba.mx",
+    "password": "12345678"
+}
+
+### Sin token (debe dar 401)
+GET {{url}}/publicaciones
+
+### Categorías
+GET {{url}}/categorias
+Authorization: {{token}}
+
+### Crear publicación
+POST {{url}}/publicaciones
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "type": "encontrado",
+    "title": "Audífonos inalámbricos",
+    "description": "Estuche blanco con una marca azul",
+    "category": "{{categoria}}",
+    "location": "Cafetería central",
+    "date": "2026-11-18",
+    "images": []
+}
+
+### Buscar publicaciones (filtros, orden y paginado)
+GET {{url}}/publicaciones?search=aud&type=encontrado&location=cafe&sort=newest&page=1&limit=5
+Authorization: {{token}}
+
+### Mis publicaciones
+GET {{url}}/publicaciones?mine=true
+Authorization: {{token}}
+
+### Detalle de una publicación
+GET {{url}}/publicaciones/{{publicacion}}
+Authorization: {{token}}
+
+### Marcar como resuelta
+PUT {{url}}/publicaciones/{{publicacion}}
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "status": "resuelta"
+}
+
+### Eliminar publicación
+DELETE {{url}}/publicaciones/{{publicacion}}
+Authorization: {{token}}
+
+### Solicitar un objeto encontrado (con el token de otro usuario)
+POST {{url}}/requests
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "publication": "{{publicacion}}",
+    "message": "Son míos, el estuche tiene una marca azul"
+}
+
+### Solicitudes enviadas
+GET {{url}}/requests?box=sent
+Authorization: {{token}}
+
+### Solicitudes recibidas
+GET {{url}}/requests?box=received
+Authorization: {{token}}
+
+### Aceptar o rechazar una solicitud (el dueño de la publicación)
+PUT {{url}}/requests/pega-aqui-el-id-de-la-solicitud
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "status": "aceptada"
+}
+
+### Reportar una publicación
+POST {{url}}/reportes
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+    "publication": "{{publicacion}}",
+    "reason": "Parece publicidad"
+}
+
+### Panel del admin
+GET {{url}}/admin/dashboard
+Authorization: {{admin}}
+
+### Crear categoría (admin)
+POST {{url}}/categorias
+Authorization: {{admin}}
+Content-Type: application/json
+
+{
+    "name": "Libros",
+    "description": "Libros y cuadernos"
+}
+
+### Reportes abiertos (admin)
+GET {{url}}/reportes?status=abierto
+Authorization: {{admin}}
+
+### Ocultar una publicación (admin)
+PUT {{url}}/publicaciones/{{publicacion}}
+Authorization: {{admin}}
+Content-Type: application/json
+
+{
+    "status": "oculta"
+}
+
+### Usuarios (admin)
+GET {{url}}/users?search=ana&page=1&limit=10
+Authorization: {{admin}}
