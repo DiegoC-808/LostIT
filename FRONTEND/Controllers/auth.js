@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loginSection.hidden = false;
         registerSection.hidden = true;
 
-        loginError.textContent = "";
-        registerError.textContent = "";
+        hideMessage(loginError);
+        hideMessage(registerError);
     }
 
     // Mostrar registro
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loginSection.hidden = true;
         registerSection.hidden = false;
 
-        loginError.textContent = "";
-        registerError.textContent = "";
+        hideMessage(loginError);
+        hideMessage(registerError);
     }
 
     // Cambiar a registro
@@ -50,12 +50,25 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.getElementById("loginPassword").value;
 
         if (!email || !password) {
-            loginError.textContent = "Completa todos los campos.";
+            showMessage(loginError, "Completa todos los campos.");
             return;
         }
 
-        loginError.textContent =
-            "El inicio de sesión todavía no está conectado al servidor.";
+        callServer('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, password: password })
+        })
+        .then(response => readResponse(response, loginError))
+        .then(data => {
+            if (data == undefined) return;
+            saveSession(data);
+        })
+        .catch(err => {
+            console.error('Error en login:', err);
+        });
     });
 
     // Validar registro
@@ -68,27 +81,40 @@ document.addEventListener("DOMContentLoaded", () => {
         const confirmPassword = document.getElementById("confirmPassword").value;
 
         if (!name || !email || !password || !confirmPassword) {
-            registerError.textContent = "Completa todos los campos.";
+            showMessage(registerError, "Completa todos los campos.");
             return;
         }
 
         if (name.length < 3) {
-            registerError.textContent = "El nombre debe tener al menos 3 caracteres.";
+            showMessage(registerError, "El nombre debe tener al menos 3 caracteres.");
             return;
         }
 
         if (password.length < 8) {
-            registerError.textContent = "La contraseña debe tener al menos 8 caracteres.";
+            showMessage(registerError, "La contraseña debe tener al menos 8 caracteres.");
             return;
         }
 
         if (password !== confirmPassword) {
-            registerError.textContent = "Las contraseñas no coinciden.";
+            showMessage(registerError, "Las contraseñas no coinciden.");
             return;
         }
 
-        registerError.textContent =
-            "El registro está validado, pero todavía no está conectado al servidor.";
+        callServer('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: name, email: email, password: password, confirm_password: confirmPassword })
+        })
+        .then(response => readResponse(response, registerError))
+        .then(data => {
+            if (data == undefined) return;
+            saveSession(data);
+        })
+        .catch(err => {
+            console.error('Error en registro:', err);
+        });
     });
 
     // Pantalla inicial

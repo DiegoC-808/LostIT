@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>LostIT | Publicaciones</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/Styles.css">
 </head>
 <body>
 
@@ -47,8 +47,16 @@
                             Mi perfil
                         </a>
                     </li>
+                    <li class="nav-item" id="adminLink" hidden>
+                        <a class="nav-link" href="admin.html">
+                            Administración
+                        </a>
+                    </li>
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-outline-light btn-sm" href="auth.html" id="logoutButton">
+                        <span class="navbar-text text-white" id="userNameNav"></span>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-outline-light btn-sm" href="login.html" id="logoutButton">
                             Cerrar sesión
                         </a>
                     </li>
@@ -126,63 +134,7 @@
             </div>
 
             <div id="publicationsContainer" class="row g-4">
-
-                <!-- EJEMPLO DE PUBLICACIÓN -->
-                <div class="col-md-6 col-lg-4">
-                    <article class="card h-100 shadow-sm border-0">
-                        <img src="assets/img/ejemplo-mochila.jpg"
-                             class="card-img-top" alt="Mochila negra"
-                             style="height: 200px; object-fit: cover;">
-
-                        <div class="card-body">
-                            <span class="badge bg-danger mb-2">Perdido</span>
-                            <h3 class="h5 card-title">Mochila negra</h3>
-                            <p class="card-text text-muted">
-                                Mochila negra con varios compartimentos.
-                            </p>
-                            <p class="small mb-1">Ubicación: Biblioteca</p>
-                            <p class="small text-muted">Categoría: Accesorios</p>
-
-                            <button type="button" class="btn btn-outline-primary w-100"
-                                    data-action="view-publication"
-                                    data-publication-id="ejemplo-mochila">
-                                Ver detalles
-                            </button>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <article class="card h-100 shadow-sm border-0">
-                        <img src="assets/img/ejemplo-audifonos.jpg"
-                             class="card-img-top" alt="Audífonos"
-                             style="height: 200px; object-fit: cover;">
-
-                        <div class="card-body">
-                            <span class="badge bg-success mb-2">Encontrado</span>
-                            <h3 class="h5 card-title">Audífonos inalámbricos</h3>
-                            <p class="card-text text-muted">
-                                Audífonos encontrados cerca de la cafetería.
-                            </p>
-                            <p class="small mb-1">Ubicación: Cafetería</p>
-                            <p class="small text-muted">Categoría: Electrónica</p>
-
-                            <button type="button" class="btn btn-outline-primary w-100"
-                                    data-action="view-publication"
-                                    data-publication-id="ejemplo-audifonos">
-                                Ver detalles
-                            </button>
-                        </div>
-                    </article>
-                </div>
-
-            </div>
-
-            <div id="publicationsLoading" class="text-center py-4 d-none">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Cargando...</span>
-                </div>
-                <p class="text-muted mt-2">Cargando publicaciones...</p>
+                <!-- El controlador carga aquí las publicaciones del servidor -->
             </div>
 
             <div id="publicationsEmpty" class="alert alert-info d-none">
@@ -192,15 +144,7 @@
             <!-- PAGINACIÓN -->
             <nav class="mt-4" aria-label="Paginación de publicaciones">
                 <ul class="pagination justify-content-center" id="publicationsPagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" data-page="previous">Anterior</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#" data-page="1">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" data-page="next">Siguiente</a>
-                    </li>
+                    <!-- El controlador arma las páginas -->
                 </ul>
             </nav>
         </section>
@@ -208,7 +152,7 @@
         <!-- VISTA: PUBLICAR OBJETO -->
         <section id="publicarSection" data-section="publicar" hidden>
             <div class="mb-4">
-                <h1 class="h2 fw-bold">Publicar un objeto</h1>
+                <h1 class="h2 fw-bold" id="publicarTitle">Publicar un objeto</h1>
                 <p class="text-muted">Comparte información del objeto perdido o encontrado.</p>
             </div>
 
@@ -260,15 +204,15 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="publicationImage" class="form-label">
-                                Fotografía (opcional)
+                            <label for="publicationImage1" class="form-label">
+                                Fotografías (opcional, hasta 3 enlaces)
                             </label>
-                            <input type="file" class="form-control" id="publicationImage"
-                                   accept="image/*">
-                            <div class="mt-3">
-                                <img id="imagePreview" src="" alt="Vista previa de la imagen"
-                                     class="img-fluid rounded d-none" style="max-height: 200px;">
-                            </div>
+                            <input type="url" class="form-control mb-2" id="publicationImage1"
+                                   placeholder="https://... foto 1">
+                            <input type="url" class="form-control mb-2" id="publicationImage2"
+                                   placeholder="https://... foto 2">
+                            <input type="url" class="form-control" id="publicationImage3"
+                                   placeholder="https://... foto 3">
                         </div>
 
                         <div id="publicationError" class="alert alert-danger d-none"></div>
@@ -298,9 +242,10 @@
             <div class="card border-0 shadow-sm">
                 <div class="row g-0">
                     <div class="col-md-5">
-                        <img id="detailImage" src="" alt="Fotografía del objeto"
+                        <img id="detailImage" alt="Fotografía del objeto"
                              class="img-fluid rounded-start w-100"
-                             style="height: 100%; min-height: 300px; object-fit: cover;">
+                             style="height: 300px; object-fit: cover;">
+                        <div id="detailGallery" class="d-flex gap-2 p-2"></div>
                     </div>
 
                     <div class="col-md-7">
@@ -315,12 +260,31 @@
                             <p><strong>Ubicación:</strong> <span id="detailLocation"></span></p>
                             <p><strong>Fecha:</strong> <span id="detailDate"></span></p>
                             <p><strong>Publicado por:</strong> <span id="detailAuthor"></span></p>
+                            <p><strong>Estado:</strong> <span id="detailState"></span></p>
 
                             <button type="button" class="btn btn-primary"
                                     id="openRequestModal" data-bs-toggle="modal"
                                     data-bs-target="#requestModal">
                                 Solicitar recuperación
                             </button>
+
+                            <button type="button" class="btn btn-outline-danger"
+                                    id="openReportModal" data-bs-toggle="modal"
+                                    data-bs-target="#reportModal">
+                                Reportar publicación
+                            </button>
+
+                            <div id="ownerActions" class="d-flex flex-wrap gap-2" hidden>
+                                <button type="button" class="btn btn-success" id="markResolvedButton">
+                                    Marcar como encontrado
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="editPublicationButton">
+                                    Editar
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" id="deletePublicationButton">
+                                    Eliminar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -343,7 +307,7 @@
                 <!-- El controlador cargará aquí las publicaciones del usuario -->
             </div>
 
-            <div id="myPublicationsEmpty" class="alert alert-info">
+            <div id="myPublicationsEmpty" class="alert alert-info d-none">
                 Todavía no tienes publicaciones.
             </div>
         </section>
@@ -390,7 +354,83 @@
         </div>
     </div>
 
+    <!-- MODAL: REPORTAR PUBLICACIÓN -->
+    <div class="modal fade" id="reportModal" tabindex="-1"
+         aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="reportForm">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="reportModalLabel">
+                            Reportar publicación
+                        </h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Cuéntale al administrador qué tiene de malo esta publicación.</p>
+
+                        <div class="mb-3">
+                            <label for="reportReason" class="form-label">Motivo</label>
+                            <textarea class="form-control" id="reportReason"
+                                      rows="3" minlength="5" maxlength="500" required></textarea>
+                        </div>
+
+                        <div id="reportError" class="alert alert-danger d-none"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">
+                            Enviar reporte
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ELIMINAR PUBLICACIÓN -->
+    <div class="modal fade" id="deletePublicationModal" tabindex="-1"
+         aria-labelledby="deletePublicationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="deletePublicationModalLabel">
+                        Eliminar publicación
+                    </h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Cerrar"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>¿Seguro que quieres eliminar esta publicación?</p>
+                    <p class="text-muted small">También se borran sus solicitudes. No se puede deshacer.</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeletePublicationButton">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- CARGANDO: animación de Lottie mientras se llama al servidor (env.js la enseña y la quita) -->
+    <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+         background-color: rgba(255, 255, 255, 0.7); z-index: 2000; align-items: center; justify-content: center;">
+        <lottie-player id="loading" src="https://lottie.host/55e35e3e-5400-4e7e-b599-9326b3637a37/ntcX2poqtH.json"
+            background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
+    </div>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="../Controllers/env.js"></script>
     <script src="../Controllers/publicaciones.js"></script>
 </body>
 </html>
